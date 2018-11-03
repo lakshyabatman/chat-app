@@ -3,16 +3,10 @@ var socket=io();
 socket.on('connect',function(){
     console.log("Connected to server!");
 
-    socket.emit('createEmail',{
-        to:"lakshya.khera@gmail.com",
-        text:"NEW EMAILL",
-    });
+});
 
-
-    socket.emit('createMessage',{
-        from :'lakshya',
-        text:"HEY THERE",
-    })
+socket.on('welcomeMessage',function(message){
+    alert(message.text);
 });
 
 socket.on('disconnect',function(){
@@ -24,6 +18,6 @@ socket.on('newEmail',function(email){
 });
 
 socket.on('newMessage',function(message){
-    console.log(message);
+    console.log(message.text);
 });
 
