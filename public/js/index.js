@@ -7,6 +7,12 @@ socket.on('connect',function(){
         to:"lakshya.khera@gmail.com",
         text:"NEW EMAILL",
     });
+
+
+    socket.emit('createMessage',{
+        from :'lakshya',
+        text:"HEY THERE",
+    })
 });
 
 socket.on('disconnect',function(){
@@ -15,5 +21,9 @@ socket.on('disconnect',function(){
 
 socket.on('newEmail',function(email){
     console.log(email);
+});
+
+socket.on('newMessage',function(message){
+    console.log(message);
 });
 

@@ -23,8 +23,22 @@
          createdAt: 123,
      });
 
+     socket.emit('newMessage',{
+         from:"Lakshya",
+         text:"HEY BUDDY"
+     });
+
      socket.on('createEmail',(newEmail)=>{
          console.log(newEmail);
+     });
+
+     socket.on('createMessage',(message)=>{
+         console.log(message);
+         io.emit('newMessage',{
+             from:message.from,
+             text:message.text,
+             createdAt:new Date().getTime()
+         })
      })
     });
 
