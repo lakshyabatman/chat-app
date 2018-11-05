@@ -14,12 +14,10 @@
      console.log("NEW USER");
 
     socket.emit('welcomeMessage',{
-        text:"Welcome User!",
+        text:"Welcome",
     });
 
-    socket.broadcast.emit('newMessage',{
-        text:"NEW USER HAVE JOINED",
-    })
+    
 
      socket.on('disconnect',()=>{
          console.log("USER WENT AWAY!");

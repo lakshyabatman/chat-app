@@ -1,23 +1,33 @@
 var socket=io();
-
+var name;
 socket.on('connect',function(){
-    console.log("Connected to server!");
-
+    name=prompt('Write your nick name');
 });
 
 socket.on('welcomeMessage',function(message){
-    alert(message.text);
+    alert(message.text+ " " + name);
 });
 
 socket.on('disconnect',function(){
-    console.log("Server is dead!!");
+    alert("Cannot reconnect");
 });
 
-socket.on('newEmail',function(email){
-    console.log(email);
-});
+//socket.on('newEmail',function(email){
+//    console.log(email);
+//});
 
 socket.on('newMessage',function(message){
-    console.log(message.text);
+    let li= document.createElement('li');
+    li.innerHTML=message.from + " said " + message.text;
+    document.getElementById('chat').appendChild(li);
 });
 
+document.getElementById('myform').addEventListener('submit',function(e){
+    message=document.getElementById('message').value;
+    socket.emit('createMessage',{
+        from:name,
+        text:message,
+    });
+    document.getElementById('message').value="";
+    e.preventDefault();
+});
