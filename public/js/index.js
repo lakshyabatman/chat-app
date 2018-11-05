@@ -1,11 +1,18 @@
 var socket=io();
 var name;
 socket.on('connect',function(){
-    name=prompt('Write your nick name');
-});
+    while(!name || name==null || name==undefined){
+        name=prompt("Write your name here:")
+    }
+    });
 
 socket.on('welcomeMessage',function(message){
     alert(message.text+ " " + name);
+    socket.emit('createMessage',{
+        from:"Admin",
+        text:name + " just joined the chat!", 
+
+    })
 });
 
 socket.on('disconnect',function(){
@@ -17,9 +24,19 @@ socket.on('disconnect',function(){
 //});
 
 socket.on('newMessage',function(message){
-    let li= document.createElement('li');
-    li.innerHTML=message.from + " said " + message.text;
-    document.getElementById('chat').appendChild(li);
+    if(message.from=="Admin"){
+        let li= document.createElement('li');
+        li.className="list-group-item list-group-item-primary";
+        li.innerHTML="<b>"+message.from + "</b> : " + message.text;
+        document.getElementById('chat').appendChild(li);
+    }
+    else{
+        let li= document.createElement('li');
+        li.className="list-group-item list-group-item-dark";
+        li.innerHTML="<b>" +message.from + "</b> : "  + message.text;
+        document.getElementById('chat').appendChild(li);
+    }
+    
 });
 
 document.getElementById('myform').addEventListener('submit',function(e){
